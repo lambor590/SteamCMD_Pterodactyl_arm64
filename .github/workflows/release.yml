@@ -12,11 +12,6 @@ jobs:
   release:
     name: Release - Docker image
     runs-on: ARM64
-    permissions:
-      contents: read
-      packages: write
-      attestations: write
-      id-token: write
     steps:
       - name: Get current date
         id: current-date
@@ -34,16 +29,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
-
-      - name: Docker - Metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            ${{ github.repository }}
-            ghcr.io/${{ github.repository }}
-          flavor: latest=true
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker - Build / Push
         id: docker_build
@@ -52,6 +38,6 @@ jobs:
           platforms: linux/arm64
           file: Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: lambor590/SteamCMD_Pterodactyl_arm64:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
