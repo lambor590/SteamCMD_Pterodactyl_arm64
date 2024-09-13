@@ -38,6 +38,6 @@ jobs:
           platforms: linux/arm64
           file: Dockerfile
           push: true
-          tags: lambor590/SteamCMD_Pterodactyl_arm64:latest
+          tags: lambor590/steamcmd_pterodactyl_arm64:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
