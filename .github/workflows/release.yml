@@ -1,5 +1,4 @@
 ---
-# Credits to sonroyaalmerol
 name: Release Image
 on:
   push:
@@ -13,11 +12,6 @@ jobs:
     name: Release - Docker image
     runs-on: ARM64
     steps:
-      - name: Get current date
-        id: current-date
-        run: |
-          echo "TODAY=$(date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
-
       - name: Checkout
         uses: actions/checkout@v4
 
