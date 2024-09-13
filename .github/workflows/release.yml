@@ -3,8 +3,7 @@
 name: Release Image
 on:
   push:
-    branches: [master]
-    paths: ['Dockerfile', '.github/workflows/release.yml']
+    paths: ['Dockerfile']
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
