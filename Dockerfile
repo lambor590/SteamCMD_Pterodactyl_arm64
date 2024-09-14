@@ -130,6 +130,10 @@ RUN set -x \
 COPY box64.sh /usr/local/bin/box64
 RUN chmod +x /usr/local/bin/box64
 
+FROM build_stage AS bookworm-root
+
+FROM bookworm-root AS bookworm
+
 # Switch to user
 USER container
 ENV         HOME=/home/container
