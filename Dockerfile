@@ -1,6 +1,6 @@
 FROM arm64v8/python:slim-bookworm as box64_m1
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND = noninteractive
 
 # Set SHELL option explicitly
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -25,7 +25,7 @@ RUN set -x \
 
 FROM arm64v8/python:slim-bookworm as box64_rpi5
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND = noninteractive
 
 # Set SHELL option explicitly
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -77,9 +77,9 @@ RUN set -x \
 
 FROM arm64v8/debian:bookworm-slim as build_stage
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND = noninteractive
 
-ENV DEBUGGER "/usr/local/bin/box86"
+ENV DEBUGGER = "/usr/local/bin/box86"
 
 # Set SHELL option explicitly
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -130,8 +130,8 @@ RUN chmod +x /usr/local/bin/box64
 
 # Switch to user
 USER container
-ENV         HOME=/home/container
-WORKDIR     /home/container
+ENV HOME = /home/container
+WORKDIR /home/container
 
-COPY        ./entrypoint.sh /entrypoint.sh
-CMD         ["/bin/bash", "/entrypoint.sh"]
+COPY ./entrypoint.sh /entrypoint.sh
+CMD ["/bin/bash", "/entrypoint.sh"]
