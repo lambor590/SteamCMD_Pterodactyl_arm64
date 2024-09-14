@@ -3,11 +3,10 @@ cd /home/container
 sleep 1
 # Make internal Docker IP address available to processes.
 export INTERNAL_IP=`hostname -I | awk '{print $1}'`
-export PATH="/home/container/box64:$PATH"
 
 # Update Source Server
 if [ ! -z ${SRCDS_APPID} ]; then
-    /home/container/box64/box64 /home/container/steamcmd/steamcmd.sh +force_install_dir /home/container +login anonymous +app_update ${SRCDS_APPID} +quit
+    /bin/box64/box64 ./steamcmd/steamcmd.sh +force_install_dir /home/container +login anonymous +app_update ${SRCDS_APPID} +quit
 fi
 
 # Replace Startup Variables
