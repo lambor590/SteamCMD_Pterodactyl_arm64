@@ -15,5 +15,10 @@ USER container
 ENV HOME=/home/container
 WORKDIR /home/container
 
+COPY ./box64.sh /box64.sh
+RUN chmod +x /box64.sh && /box64.sh
+
 COPY ./entrypoint.sh /entrypoint.sh
-CMD ["/bin/bash", "/entrypoint.sh"]
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/box64", "/bin/bash", "-c", "box64 ./steamcmd/steamcmd.sh +quit && box64 /entrypoint.sh"]
