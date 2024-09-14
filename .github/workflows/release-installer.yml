@@ -1,8 +1,8 @@
 ---
-name: Release Runner Image
+name: Release Installer Image
 on:
   push:
-    paths: ['runner/Dockerfile', 'box64.sh']
+    paths: ['installer/Dockerfile', 'box64.sh']
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
@@ -30,8 +30,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           platforms: linux/arm64
-          file: runner/Dockerfile
+          file: installer/Dockerfile
           push: true
-          tags: ghcr.io/lambor590/steamcmd_pterodactyl_arm64:latest
+          tags: ghcr.io/lambor590/steamcmd_pterodactyl_arm64:installer
           cache-from: type=gha
           cache-to: type=gha,mode=max

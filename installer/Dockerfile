@@ -78,7 +78,7 @@ RUN set -x \
 FROM arm64v8/debian:bookworm-slim AS build_stage
 
 ENV DEBIAN_FRONTEND=noninteractive
-
+ENV STEAMCMDDIR=/root/steamcmd
 ENV DEBUGGER="/usr/local/bin/box86"
 
 # Set SHELL option explicitly
@@ -120,18 +120,25 @@ RUN set -x \
 		box86-generic-arm \
 	&& sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
 	&& dpkg-reconfigure --frontend=noninteractive locales \
+	&& mkdir -p ${STEAMCMDDIR} \
+        && curl -fsSL 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar xvzf - -C ${STEAMCMDDIR} \
+        && ${STEAMCMDDIR}/steamcmd.sh +quit \
+        && ln -s ${STEAMCMDDIR}/linux32/steamclient.so ${STEAMCMDDIR}/steamservice.so \
+        && ln -s ${STEAMCMDDIR}/linux32/steamcmd ${STEAMCMDDIR}/linux32/steam \
+        && ln -s ${STEAMCMDDIR}/linux64/steamcmd ${STEAMCMDDIR}/linux64/steam \
+        && ln -s ${STEAMCMDDIR}/steamcmd.sh ${STEAMCMDDIR}/steam.sh \
+	# Symlink steamclient.so; So misconfigured dedicated servers can find it
 	&& mkdir -p /usr/lib/x86_64-linux-gnu \
+ 	&& ln -s "${STEAMCMDDIR}/linux64/steamclient.so" "/usr/lib/x86_64-linux-gnu/steamclient.so" \
+ 	&& ln -s "${STEAMCMDDIR}/linux32/steamclient.so" "/usr/lib/i386-linux-gnu/steamclient.so" \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& mv /usr/local/bin/box64 /usr/local/bin/box64-generic \
-    && useradd -m -d /home/container container
+    && apt-get clean autoclean \
+	&& apt-get autoremove -y \
+	&& mv /usr/local/bin/box64 /usr/local/bin/box64-generic
 
 COPY box64.sh /usr/local/bin/box64
 RUN chmod +x /usr/local/bin/box64
 
-# Switch to user
-USER container
-ENV HOME=/home/container
-WORKDIR /home/container
+WORKDIR $STEAMCMDDIR
 
-COPY ./entrypoint.sh /entrypoint.sh
-CMD ["/bin/bash", "/entrypoint.sh"]
+VOLUME $STEAMCMDDIR

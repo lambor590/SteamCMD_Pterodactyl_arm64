@@ -5,7 +5,8 @@ This image is made for running on Pterodactyl, so you just need to change the im
 ## Usage
 
 ```
-Change the image of an egg to this one: lambor590/steamcmd_pterodactyl_arm64:latest
+Change the image of an egg to this one: lambor590/steamcmd_pterodactyl_arm64
+And the installer image to this one: lambor590/steamcmd_pterodactyl_arm64:installer
 ```
 
 This image is unfinnished, so it may not work properly.
