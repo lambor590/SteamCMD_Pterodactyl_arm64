@@ -12,13 +12,10 @@ RUN apt-get update \
 
 COPY ./box64.sh /mnt/server/box64.sh
 COPY ./entrypoint.sh /mnt/server/entrypoint.sh
-RUN chmod +x /home/container/box64.sh /home/container/entrypoint.sh \
-    && chown -R container:container /home/container
 
 # Switch to user
 USER container
 ENV HOME=/home/container
 WORKDIR /home/container
 
-COPY ./entrypoint.sh /home/container/entrypoint.sh
 CMD ["/bin/bash", "/home/container/entrypoint.sh"]
