@@ -6,8 +6,8 @@ export INTERNAL_IP=`hostname -I | awk '{print $1}'`
 
 # Update Source Server
 if [ ! -z ${SRCDS_APPID} ]; then
-    ls -la /usr/local/bin/box64.sh
-    bin/box64 ./steamcmd/steamcmd.sh +force_install_dir /home/container +login anonymous +app_update ${SRCDS_APPID} +quit
+    ls -la /usr/local/bin
+    /bin/box64 ./steamcmd/steamcmd.sh +force_install_dir /home/container +login anonymous +app_update ${SRCDS_APPID} +quit
 fi
 
 # Replace Startup Variables
