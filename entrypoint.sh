@@ -6,11 +6,11 @@ export INTERNAL_IP=`hostname -I | awk '{print $1}'`
 
 # Update Source Server
 if [ ! -z ${SRCDS_APPID} ]; then
-    ./steamcmd/steamcmd.sh +force_install_dir /home/container +login anonymous +app_update ${SRCDS_APPID} +quit
+    /bin/box64 ./steamcmd/steamcmd.sh +force_install_dir /home/container +login anonymous +app_update ${SRCDS_APPID} +quit
 fi
 
 # Replace Startup Variables
-MODIFIED_STARTUP=`eval echo $(echo box64 ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+MODIFIED_STARTUP=`eval echo $(echo /bin/box64 ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
 echo ":/home/container$ ${MODIFIED_STARTUP}"
 
 # Run the Server
