@@ -146,7 +146,7 @@ RUN set -x \
  	&& ln -s "${STEAMCMDDIR}/linux64/steamclient.so" "/usr/lib/x86_64-linux-gnu/steamclient.so" \
  	&& ln -s "${STEAMCMDDIR}/linux32/steamclient.so" "/usr/lib/i386-linux-gnu/steamclient.so" \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& mv /usr/local/bin/box64 /usr/local/bin/box64-generic
+	&& mv /usr/local/bin/box64 /usr/local/bin/box64-generic \
     && useradd -m -d /home/container container
 
 COPY box64.sh /usr/local/bin/box64
