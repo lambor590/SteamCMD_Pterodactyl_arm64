@@ -79,9 +79,9 @@ FROM arm64v8/debian:bookworm-slim as build_stage
 
 ARG PUID=1000
 
-ENV USER container
-ENV HOMEDIR "/mnt/server"
-ENV STEAMCMDDIR "/mnt/server/steamcmd"
+ENV USER steam
+ENV HOMEDIR "/home/${USER}"
+ENV STEAMCMDDIR "${HOMEDIR}/steamcmd"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -146,8 +146,7 @@ RUN set -x \
  	&& ln -s "${STEAMCMDDIR}/linux64/steamclient.so" "/usr/lib/x86_64-linux-gnu/steamclient.so" \
  	&& ln -s "${STEAMCMDDIR}/linux32/steamclient.so" "/usr/lib/i386-linux-gnu/steamclient.so" \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& mv /usr/local/bin/box64 /usr/local/bin/box64-generic \
-    && useradd -m -d /home/container container
+	&& mv /usr/local/bin/box64 /usr/local/bin/box64-generic
 
 COPY box64.sh /usr/local/bin/box64
 RUN chmod +x /usr/local/bin/box64
@@ -157,9 +156,7 @@ WORKDIR ${STEAMCMDDIR}
 
 FROM bookworm-root AS bookworm
 # Switch to user
-USER container
-
-
+USER        container
 ENV         HOME=/home/container
 WORKDIR     /home/container
 
