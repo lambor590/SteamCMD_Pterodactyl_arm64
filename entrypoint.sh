@@ -10,8 +10,8 @@ if [ ! -z ${SRCDS_APPID} ]; then
 fi
 
 # Replace Startup Variables
-MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+MODIFIED_STARTUP=`eval echo $(echo box64 ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
 echo ":/home/container$ ${MODIFIED_STARTUP}"
 
 # Run the Server
-eval box64 ${MODIFIED_STARTUP}
+eval ${MODIFIED_STARTUP}
