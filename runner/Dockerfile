@@ -20,4 +20,4 @@ USER container
 ENV HOME=/home/container
 WORKDIR /home/container
 
-ENTRYPOINT ["/box64", "/bin/bash", "-c", "box64 ./steamcmd/steamcmd.sh +quit && box64 /entrypoint.sh"]
+CMD ["/bin/bash", "/home/container/entrypoint.sh"]
